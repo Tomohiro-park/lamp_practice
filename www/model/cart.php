@@ -21,9 +21,9 @@ function get_user_carts($db, $user_id){
     ON
       carts.item_id = items.item_id
     WHERE
-      carts.user_id = {$user_id}
+      carts.user_id = ?
   ";
-  return fetch_all_query($db, $sql);
+  return fetch_all_query($db, $sql,[$user_id]);
 }
 
 function get_user_cart($db, $user_id, $item_id){
@@ -45,12 +45,12 @@ function get_user_cart($db, $user_id, $item_id){
     ON
       carts.item_id = items.item_id
     WHERE
-      carts.user_id = {$user_id}
+      carts.user_id = ?
     AND
-      items.item_id = {$item_id}
+      items.item_id = ?
   ";
 
-  return fetch_query($db, $sql);
+  return fetch_query($db, $sql, [$user_id, $item_id]);
 
 }
 
@@ -70,8 +70,13 @@ function insert_cart($db, $user_id, $item_id, $amount = 1){
         user_id,
         amount
       )
-    VALUES({$item_id}, {$user_id}, {$amount})
+    VALUES({?, ?, ?)
   ";
+  $stmt = $db->prepare($sql);
+  $stmt->bindValue(1, $item_id, PDO::PARAM_INT);
+  $stmt->bindValue(2, $user_id, PDO::PARAM_INT);
+  $stmt->bindValue(3, $amount, PDO::PARAM_INT);
+  $stmt->execute();
 
   return execute_query($db, $sql);
 }
@@ -81,11 +86,15 @@ function update_cart_amount($db, $cart_id, $amount){
     UPDATE
       carts
     SET
-      amount = {$amount}
+      amount = ?
     WHERE
-      cart_id = {$cart_id}
+      cart_id = ?
     LIMIT 1
   ";
+  $stmt = $db->prepare($sql);
+  $stmt->bindValue(1, $amount, PDO::PARAM_INT);
+  $stmt->bindValue(2, $cart_id, PDO::PARAM_INT);
+  $stmt->execute();
   return execute_query($db, $sql);
 }
 
@@ -94,9 +103,12 @@ function delete_cart($db, $cart_id){
     DELETE FROM
       carts
     WHERE
-      cart_id = {$cart_id}
+      cart_id = ?
     LIMIT 1
   ";
+  $stmt = $db->prepare($sql);
+  $stmt->bindValue(1, $cart_id, PDO::PARAM_INT);
+  $stmt->execute();
 
   return execute_query($db, $sql);
 }
@@ -123,8 +135,11 @@ function delete_user_carts($db, $user_id){
     DELETE FROM
       carts
     WHERE
-      user_id = {$user_id}
+      user_id = ?
   ";
+  $stmt = $db->prepare($sql);
+  $stmt->bindValue(1, $user_id, PDO::PARAM_INT);
+  $stmt->execute();
 
   execute_query($db, $sql);
 }
