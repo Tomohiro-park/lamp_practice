@@ -12,6 +12,12 @@ if(is_logined() === true){
 $name = get_post('name');
 $password = get_post('password');
 $password_confirmation = get_post('password_confirmation');
+$token = get_post('token');
+
+if(is_valid_csrf_token($token) === false) {
+  set_error('不正な操作が行われました。');
+  redirect_to(SIGNUP_URL);
+}
 
 $db = get_db_connect();
 
