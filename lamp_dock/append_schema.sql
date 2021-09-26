@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: mysql
--- 生成日時: 2021 年 9 月 25 日 08:32
+-- 生成日時: 2021 年 9 月 26 日 02:32
 -- サーバのバージョン： 5.7.35
 -- PHP のバージョン: 7.4.20
 
@@ -28,9 +28,8 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `detail` (
+  `detail_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `item_id` int(11) NOT NULL,
   `price` int(11) NOT NULL,
   `amount` int(11) NOT NULL,
   `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -43,12 +42,43 @@ CREATE TABLE `detail` (
 --
 
 CREATE TABLE `history` (
-  `order_id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `total` int(11) NOT NULL,
-  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  primary key(order_id)
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- ダンプしたテーブルのインデックス
+--
+
+--
+-- テーブルのインデックス `detail`
+--
+ALTER TABLE `detail`
+  ADD PRIMARY KEY (`detail_id`);
+
+--
+-- テーブルのインデックス `history`
+--
+ALTER TABLE `history`
+  ADD PRIMARY KEY (`order_id`);
+
+--
+-- ダンプしたテーブルの AUTO_INCREMENT
+--
+
+--
+-- テーブルの AUTO_INCREMENT `detail`
+--
+ALTER TABLE `detail`
+  MODIFY `detail_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルの AUTO_INCREMENT `history`
+--
+ALTER TABLE `history`
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
