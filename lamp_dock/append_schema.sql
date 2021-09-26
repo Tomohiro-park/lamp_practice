@@ -43,10 +43,11 @@ CREATE TABLE `detail` (
 --
 
 CREATE TABLE `history` (
-  `order_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `total` int(11) NOT NULL,
-  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  primary key(order_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 COMMIT;
 
