@@ -22,6 +22,9 @@ $order_id = get_post('order_id');
 $created = get_post('created');
 $total = get_post('total');
 
-$details = get_detail($db, $order_id);
-
+if (is_admin($user)){
+    $details = get_detail($db, $order_id);
+} else {
+    $details = get_user_detail($db, $order_id, $user['user_id']);
+}
 include_once VIEW_PATH . 'detail_view.php';

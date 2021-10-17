@@ -23,6 +23,7 @@
                             <th>注文番号</th>
                             <th>購入日時</th>
                             <th>合計金額</th>
+                            <th>明細</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -32,8 +33,8 @@
                                 <td><?php print(h($history['created'])); ?></td>
                                 <td><?php print(h($history['total'])); ?>円</td>
                                 <td>
-                                    <form method="post" action="ditail.php">
-                                        <input type="submit" value="明細" class="get_ditail">
+                                    <form method="post" action="detail.php">
+                                        <input type="submit" value="明細" class="get_detail">
                                         <input type="hidden" name="token" value="<?php print $token; ?>">
                                         <input type="hidden" name="order_id" value="<?php print(h($history['order_id'])); ?>">
                                         <input type="hidden" name="created" value="<?php print(h($history['created'])); ?>">

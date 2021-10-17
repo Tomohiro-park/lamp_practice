@@ -13,7 +13,7 @@ function get_user_history($db, $user_id){
     WHERE
        history.user_id = ?
     ORDER BY
-       order_id
+       order_id DESC
 ";
  return fetch_all_query($db, $sql, [$user_id]);
 }
@@ -27,7 +27,7 @@ function get_admin_history($db){
     FROM
        history
     ORDER BY
-       order_id
+       order_id DESC
 ";
  return fetch_all_query($db, $sql);
 }
@@ -38,7 +38,7 @@ function get_detail ($db, $order_id){
       detail.item_id,
       detail.price,
       detail.amount,
-      items.name,
+      items.name
     FROM
       detail
     JOIN
@@ -49,4 +49,29 @@ function get_detail ($db, $order_id){
       detail.order_id = ?
 ";
  return fetch_all_query($db, $sql, [$order_id]);
+}
+
+function get_user_detail ($db, $order_id, $user_id){
+  $sql = "
+  SELECT
+      detail.item_id,
+      detail.price,
+      detail.amount,
+      items.name
+    FROM
+      detail
+    JOIN
+      items
+    ON
+      detail.item_id = items.item_id
+    JOIN
+      history
+    ON
+      detail.order_id = history.order_id
+    WHERE
+      history.order_id = ?
+    AND
+      history.user_id = ?
+";
+  return fetch_all_query($db, $sql, [$order_id, $user_id]);  
 }
