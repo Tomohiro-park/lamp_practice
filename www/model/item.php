@@ -43,12 +43,92 @@ function get_items($db, $is_open = false){
   return fetch_all_query($db, $sql);
 }
 
+function get_items_sort_new($db, $is_open = false){
+  $sql = '
+    SELECT
+      item_id, 
+      name,
+      stock,
+      price,
+      image,
+      status
+    FROM
+      items 
+  ';
+  if($is_open === true){
+    $sql .= '
+      WHERE status = 1
+      ORDER BY
+        created DESC
+    ';
+  }
+
+  return fetch_all_query($db, $sql);
+}
+
+function get_items_sort_low_price($db, $is_open = false){
+  $sql = '
+    SELECT
+      item_id, 
+      name,
+      stock,
+      price,
+      image,
+      status
+    FROM
+      items
+  ';
+  if($is_open === true){
+    $sql .= '
+      WHERE status = 1
+      ORDER BY
+        price
+    ';
+  }
+  return fetch_all_query($db, $sql);
+}
+
+function get_items_sort_high_price($db, $is_open = false){
+  $sql = '
+    SELECT
+      item_id, 
+      name,
+      stock,
+      price,
+      image,
+      status
+    FROM
+      items
+  ';
+  if($is_open === true){
+    $sql .= '
+      WHERE status = 1
+      ORDER BY
+        price DESC
+    ';
+  }
+
+  return fetch_all_query($db, $sql);
+}
+
 function get_all_items($db){
   return get_items($db);
 }
 
 function get_open_items($db){
   return get_items($db, true);
+}
+
+function get_open_items_new($db){
+  return get_items_sort_new($db, true);
+}
+
+function get_open_items_low($db){
+  return get_items_sort_low_price($db, true);
+}
+
+function get_open_items_high($db){
+  return get_items_sort_high_price($db, true);
 }
 
 function regist_item($db, $name, $price, $stock, $status, $image){
