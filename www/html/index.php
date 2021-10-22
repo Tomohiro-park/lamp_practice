@@ -17,13 +17,15 @@ $token = get_csrf_token();
 $sort = get_get('sort');
 
 if ($sort === ''){
-  $items = get_open_items($db);
+  $items = get_open_items_new($db);
 } else if ($sort === 'new'){
   $items = get_open_items_new($db);
 } else if ($sort === 'low_price'){
   $items = get_open_items_low($db);
 } else if ($sort === 'high_price'){
   $items = get_open_items_high($db);
+} else {
+  $items = get_open_items_new($db);
 }
 
 

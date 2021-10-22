@@ -1,4 +1,9 @@
 .item {
   margin-top: 10px;
 }
-
+.top {
+  display: flex;
+}
+.sort {
+  margin: 0 0 0 auto;
+}
